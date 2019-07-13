@@ -1,0 +1,28 @@
+{
+  "name": "front_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.3",
+    "koa-controllers": "^0.1.6",
+    "md5": "^2.2.1",
+    "moment": "^2.22.2",
+    "mysql2": "^1.6.1",
+    "reflect-metadata": "^0.1.12",
+    "sequelize": "^4.39.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.46",
+    "sequelize-cli": "^4.1.1",
+    "typescript": "^3.1.1",
+    "@types/md5": "^2.1.33",
+    "@types/sequelize": "^4.27.27",
+  }
+}

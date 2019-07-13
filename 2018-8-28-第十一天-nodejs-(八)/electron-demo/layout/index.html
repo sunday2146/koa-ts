@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>App</h1>
+
+    <button>按钮</button>
+    <button>按钮2</button>
+
+    <script>
+    
+        // 在渲染进程中不能直接获取到主进程中的数据
+        // console.log(username);
+
+        // 在渲染进程中也可以使用electron对象
+        // electron对象下面有的属性方法只能在主进程中使用，有的
+        // 是在渲染进程中有的
+
+        const {remote, ipcRenderer} = require('electron');
+
+        // console.log(electron);
+
+        // 如果需要访问主进程中的数据，那么我们可以通过渲染进程中的electron下有一个
+        // 子对象：remote =》 主进程
+        
+        // console.log(remote);
+
+        // 该对象下有一个方法：getGlobal，可以通过该方法来获取主进程中的全局数据
+
+        // console.log(remote.getGlobal('username'));
+
+        // IPC
+        
+        const buttons = document.querySelectorAll('button');
+
+        buttons[0].onclick = function() {
+
+            ipcRenderer.send('getData', 'username');
+
+        }
+
+        ipcRenderer.on('sendData', function(e, data) {
+            console.log(data);
+        });
+
+        ipcRenderer.on('hello', function(e, ...data) {
+            console.log(data);
+        });
+
+        // 当按钮2倍点击的时候，产生一个数据
+        buttons[1].onclick = function() {
+            // storage
+            localStorage.setItem('val', 'zMouse');
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+
+        <h1>TodoList</h1>
+        <div>
+            <input type="text" v-model="newTask" />
+            <button @click="add">提交</button>
+        </div>
+        <hr />
+        <ul>
+            <li v-for="todo of todos">
+                <input type="checkbox" @click.prevent="toggle(todo.id)" :checked="todo.done" />
+                <span>{{todo.title}}</span>
+                <button @click="remove(todo.id)">删除</button>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- <button>获取数据</button> -->
+
+    <script>
+    
+        // var button = document.querySelector('button');
+
+        // button.onclick = function() {
+        //     fetch('/').then( res => {
+        //         return res.text();
+        //     } ).then( data => {
+        //         // 拿到数据以后，通过dom操作，去改变现有的html结构
+        //         console.log(data);
+        //     } )
+        // }
+
+        new Vue({
+            el: '#app',
+            data: {
+                newTask: '',
+                todos: []
+            },
+            created() {
+                // 页面初始化的时候就发送一个请求，请求任务列表数据
+                // 通过什么方式从后端拿去数据：http方法，http的url，需不需要带数据给后端
+                // 上面这个：接口，api
+                fetch('/todos').then(res => {
+                    return res.json();
+                }).then(data => {
+                    // console.log(data);'
+
+                    if (!data.code) {
+                        this.todos = data.data;
+                    }
+                });
+            },
+            methods: {
+                toggle(id) {
+                    // 发送请求到后端，修改当前数据的状态
+                    fetch('/toggle', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({id})
+                    }).then(res => {
+                        return res.json();
+                    }).then(data => {
+                        // console.log(data);
+                        if (data.code) {
+                            alert(data.data);
+                        } else {
+                            let todo = this.todos.find(todo => todo.id == id);
+                            todo.done = data.data.done;
+                        }
+                    });
+                },
+
+                remove(id) {
+                    fetch('/remove', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({id})
+                    }).then(res => {
+                        return res.json();
+                    }).then(data => {
+                        if (data.code) {
+                            alert(data.data);
+                        } else {
+                            this.todos = this.todos.filter(todo => todo.id != id);
+                        }
+                    });
+                },
+
+                add() {
+                    fetch('/add', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({title: this.newTask})
+                    }).then(res => {
+                        return res.json();
+                    }).then(data => {
+                        if (data.code) {
+                            alert(data.data);
+                        } else {
+                            this.todos.push(data.data);
+                        }
+                        this.newTask = '';
+                    });
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>

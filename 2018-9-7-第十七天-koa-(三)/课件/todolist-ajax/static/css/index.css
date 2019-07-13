@@ -1,0 +1,8 @@
+li {
+    line-height: 40px;
+}
+
+input:checked+span {
+    text-decoration: line-through;
+    color: #cccccc;
+}

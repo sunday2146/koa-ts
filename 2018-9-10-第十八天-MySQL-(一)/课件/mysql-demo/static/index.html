@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>App</h1>
+        <div>
+            <input type="text" v-model="newValue" />
+            <button @click="add">添加新任务</button>
+        </div>
+        <hr />
+        <ul>
+            <li v-for="todo of todos" :key="todo.id">
+                <span>{{todo.title}}</span>
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+    
+        new Vue({
+            el: '#app',
+            data: {
+                newValue: '',
+                todos: []
+            },
+            created() {
+                // console.log(1)
+                this.getData();
+            },
+            methods: {
+                getData() {
+                    fetch('/todos').then(res => {
+                        return res.json();
+                    }).then( data => {
+                        this.todos = data.data;
+                        // console.log(1)
+                    } );
+                },
+                add() {
+                    fetch('/add', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify( {title: this.newValue} )
+                    }).then(res => {
+                        return res.json();
+                    }).then( data => {
+                        // this.todos = data.data;
+                        // console.log(1)
+                        if (!data.code) {
+                            this.getData();
+                        }
+                    } )
+
+                    this.newValue = '';
+                }
+            }
+        })
+    
+    </script>
+</body>
+</html>

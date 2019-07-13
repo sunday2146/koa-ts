@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+        <h1>这是列表</h1>
+        <ul>
+            <li v-for="user of users">{{user}}</li>
+        </ul>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                users: []
+            },
+            created() {
+
+                // .push
+
+                // 某个东西对外系统的用于操作他的方法
+                fetch('/user').then( res => {
+                    // console.log(res);
+
+                    // 返回的还是一个Promise对象
+                    return res.json();
+                } ).then( data => {
+                    // console.log(data);
+                    this.users = data;
+                } )
+
+            }
+        });
+    </script>
+</body>
+</html>

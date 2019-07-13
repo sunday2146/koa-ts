@@ -1,0 +1,33 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "miaov_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "seederStorage": "sequelize",
+    "seederStoragePath": "userTestData.json",
+    "seederStorageTableName": "userTestData"
+  },
+  "home": {
+    "username": "root",
+    "password": null,
+    "database": "miaov_home",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "miaov_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "miaov_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

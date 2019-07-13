@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/koa": "^2.0.46",
+    "koa": "^2.5.3",
+    "koa-controllers": "^0.1.6",
+    "reflect-metadata": "^0.1.12",
+    "routing-controllers": "^0.7.7"
+  }
+}
